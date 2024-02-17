@@ -10,7 +10,6 @@ export function useWeb5VueUtils() {
   const { $web5 } = useNuxtApp();
   const { dwnEndpoint } = storeToRefs(useAppUserConfigStore());
   const { myDid } = storeToRefs(useAppStore());
-  const { setVcJwt } = useAppStore();
 
   const validateDwnEnpoint = async (dwnUrl: string) => {
     try {

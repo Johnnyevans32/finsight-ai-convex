@@ -24,7 +24,6 @@ export const useAppStore = defineStore("appStore", () => {
   });
 
   const myDid = ref<string>("");
-  const vcJwt = ref<string>("");
   const user = ref<UserDTO>({});
   const accounts = ref<AccountDTO[]>([]);
   const assets = ref<AccountAssetDTO[]>([]);
@@ -47,10 +46,6 @@ export const useAppStore = defineStore("appStore", () => {
   }
   function setMyDid(_did: string) {
     myDid.value = _did;
-  }
-
-  function setVcJwt(_vcJwt: string) {
-    vcJwt.value = _vcJwt;
   }
 
   function setTransactions(_transactions: AccountStatementDTO[]) {
@@ -92,7 +87,6 @@ export const useAppStore = defineStore("appStore", () => {
     myDid,
     appLocked,
     inactivityPeriodLimit,
-    vcJwt,
     setAppLocked,
     updateLoadingScreenStatus,
     setTransactions,
@@ -105,6 +99,5 @@ export const useAppStore = defineStore("appStore", () => {
     setMyDid,
     user,
     setUser,
-    setVcJwt,
   };
 });

@@ -13,7 +13,7 @@ export function useAppVueUtils() {
   const { deleteRecord } = useWeb5VueUtils();
   const { disconnectAccount } = useConvex();
 
-  const { transactions, assets, accounts, budgets, conversations, vcJwt } =
+  const { transactions, assets, accounts, budgets, conversations } =
     storeToRefs(useAppStore());
   const {
     setAccounts,
@@ -22,24 +22,6 @@ export function useAppVueUtils() {
     setConversations,
     setBudgets,
   } = useAppStore();
-
-  const useCustomFetch = async <T>(url: string, options?: any): Promise<T> => {
-    const res = await $fetch<T>(url, {
-      ...options,
-      async onResponseError({ response }) {},
-
-      async onRequest({ request, options }) {
-        options.baseURL = config.public.apiUrl;
-        options.headers = {
-          ...options.headers,
-          Authorization: `Bearer ${vcJwt.value}`,
-        };
-      },
-      async onRequestError({ request, options, error }) {},
-    });
-
-    return res as T;
-  };
 
   const $launchMono = (options: any) => {
     const connect = new Connect({
@@ -102,7 +84,6 @@ export function useAppVueUtils() {
   };
 
   return {
-    useCustomFetch,
     $launchMono,
     deleteRecordsFromProtocol,
   };

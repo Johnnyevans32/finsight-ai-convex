@@ -49,12 +49,8 @@ export default defineNuxtConfig({
       appName: process.env.APP_NAME,
       appDesc: process.env.APP_DESC,
       appContactEmail: process.env.APP_CONTACT_EMAIL,
-      apiUrl: process.env.API_URL,
       convexUrl: process.env.CONVEX_URL,
     },
-    monoApiUrl: "",
-    monoSecretKey: "",
-    openaiApiKey: "",
   },
   vite: {
     plugins: [nodePolyfills()],
