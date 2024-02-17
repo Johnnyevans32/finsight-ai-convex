@@ -1,0 +1,35 @@
+<template>
+  <div class="w-full bg-gray-200 rounded-xl h-2.5">
+    <div
+      :class="progressBarColor"
+      class="h-2.5 rounded-xl"
+      :style="'width:' + Math.min(percentage, 100) + '%'"
+    ></div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  props: {
+    percentage: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup(props, ctx) {
+    const progressBarColor = computed(() => {
+      if (props.percentage >= 70) {
+        return "bg-[#f80000]";
+      } else if (props.percentage >= 40 && props.percentage < 70) {
+        return "bg-[#feed01]";
+      } else {
+        return "bg-green-400";
+      }
+    });
+
+    return { progressBarColor };
+  },
+});
+</script>
