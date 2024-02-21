@@ -196,7 +196,8 @@ export default defineComponent({
             item,
             ACCOUNT_TRANSACTIONS,
             accountRecord?.recordId,
-            item.date
+            item.date,
+            item.statementId
           )
         ),
         ...accountAssets.map((item) =>

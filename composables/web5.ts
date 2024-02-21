@@ -4,11 +4,9 @@ import { Record } from "@web5/api/dist/types/record";
 import { Protocol } from "@web5/api/dist/types/protocol";
 
 import { useAppStore } from "~/store";
-import { useAppUserConfigStore } from "~/store/config";
 
 export function useWeb5VueUtils() {
   const { $web5 } = useNuxtApp();
-  const { dwnEndpoint } = storeToRefs(useAppUserConfigStore());
   const { myDid } = storeToRefs(useAppStore());
 
   const validateDwnEnpoint = async (dwnUrl: string) => {
@@ -42,7 +40,8 @@ export function useWeb5VueUtils() {
     data: T,
     schema: string,
     parentId?: string,
-    dateCreated?: string
+    dateCreated?: string,
+    recordId?: string
   ) => {
     const { record, status } = await $web5.dwn.records.write({
       data,
@@ -52,6 +51,7 @@ export function useWeb5VueUtils() {
         schema: protocolDefinition.types[schema].schema,
         dataFormat: protocolDefinition.types[schema].dataFormats?.[0],
         ...(parentId ? { parentId, contextId: parentId } : {}),
+        ...(recordId ? { recordId } : {}),
         ...(dateCreated
           ? {
               dateCreated: formatToWeb5Date(dateCreated),
@@ -99,36 +99,6 @@ export function useWeb5VueUtils() {
     return loadRecords as T;
   };
 
-  const findPaginatedRecords = async <T>(
-    schema: string,
-    recordId?: string,
-    itemsPerPage = 10
-  ) => {
-    const { records } = await $web5.dwn.records.query({
-      from: myDid.value,
-      message: {
-        filter: {
-          protocol: protocolDefinition.protocol,
-          schema: protocolDefinition.types[schema].schema,
-        },
-        pagination: {
-          limit: itemsPerPage,
-        },
-        dateSort: DateSort.CreatedAscending,
-        ...(recordId ? { recordId } : {}),
-      },
-    });
-    const loadRecords = await Promise.all(
-      (records || []).map(
-        async (record: { data: { json: () => any }; id: any }) => {
-          const data = await record.data.json();
-          return { recordId: record.id, ...data };
-        }
-      )
-    );
-
-    return loadRecords as T;
-  };
   const updateRecord = async (recordId: string, data: any, schema: string) => {
     const { record, status } = await $web5.dwn.records.read({
       message: {
