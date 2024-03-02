@@ -15,10 +15,11 @@ export const chat = action({
     const invalidPromptResponse = "I have no idea boss";
     const response = await client.chat.completions.create({
       model: "gpt-3.5-turbo",
+      // model: "gpt-4",
       messages: [
         {
           role: "system",
-          content: `You are a virtual financial assistant. Answer questions based on the financial context provided. If a question can't be answered with the context, say "${invalidPromptResponse}"\n\n`,
+          content: `You are a virtual financial assistant. Answer questions in html text based on the financial context provided. If a question can't be answered with the context, say "${invalidPromptResponse}"\n\n`,
         },
         {
           role: "user",

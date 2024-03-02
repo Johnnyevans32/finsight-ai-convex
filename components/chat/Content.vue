@@ -95,7 +95,7 @@ export default defineComponent({
     const hoveredIndex = ref<null | number>(null);
     const suggestedPrompts = ref([
       { title: "What's my", others: "income for last month?" },
-      { title: "How much did I spend on", others: "groceries last week?" },
+      { title: "What's my", others: "networth?" },
       { title: "Show me my", others: "monthly expenses breakdown?" },
       {
         title: "Set a budget of",
@@ -265,12 +265,13 @@ export default defineComponent({
           });
           return;
         }
-        addToConversations(prompt.value, "user");
+        const userPrompt = prompt.value;
+        prompt.value = "";
+        addToConversations(userPrompt, "user");
 
-        const response = await chat(userFinanceContext.value, prompt.value);
+        const response = await chat(userFinanceContext.value, userPrompt);
 
         addToConversations(response, "ai");
-        prompt.value = "";
       } catch (error) {
         console.log({ error });
         notify({
