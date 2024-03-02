@@ -1,7 +1,8 @@
 "use node";
-import { action } from "./_generated/server";
 import { v } from "convex/values";
 import axios from "axios";
+
+import { action } from "../_generated/server";
 import {
   AccountDetail,
   AccountLinkProviderResponse,
@@ -11,8 +12,8 @@ import {
   CurrencySymbols,
   IAccountTransactionResponse,
   BankDTO,
-} from "./mono.types";
-import { extractBgColorsFromImage, groupBy } from "./utils";
+} from "../types/mono";
+import { extractBgColorsFromImage, groupBy } from "../utils";
 
 const $axios = axios.create({
   baseURL: process.env.MONO_API_URL,

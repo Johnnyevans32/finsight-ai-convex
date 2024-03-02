@@ -13,6 +13,8 @@ import {
 } from "~/services/schemas";
 import { TransactionCategory } from "~/types/accounts";
 
+export const AGENT_MANAGER_NAME = "FinsightAI Agent";
+
 export const formatMoney = (value: number) =>
   value.toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -36,6 +38,7 @@ export const groupByDate = <T>(
     return result;
   }, {});
 };
+
 export const truncateString = (data: string) =>
   `${data.substring(0, 7)}...${data.slice(data.length - 4)}`;
 

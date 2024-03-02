@@ -1,5 +1,5 @@
 <template>
-  <div class="md:h-[80vh] h-[70vh] flex flex-col gap-2 place-content-between">
+  <div class="md:h-[80vh] h-[75vh] flex flex-col gap-2 place-content-between">
     <ChatConversation v-show="conversations.length" />
 
     <div
@@ -45,11 +45,12 @@
         v-model="prompt"
         @keyup.enter="answerQuestion"
         class="flex-1"
-        custom-css="border-r-0 rounded-r-none "
+        custom-css="border-r-0 rounded-r-none"
         placeholder="Ask me anything about your finance"
       />
       <button
-        class="flex items-center bg-lightbase rounded-lg p-2 border-[1px] border-l-0 border-base rounded-l-none"
+        class="flex items-center bg-lightbase rounded-lg px-5 py-2 border-[1px] border-l-0 border-base rounded-l-none"
+        @click="answerQuestion"
       >
         <font-awesome-icon
           :icon="aiResponseLoading ? 'pause' : 'arrow-up'"
@@ -88,14 +89,18 @@ export default defineComponent({
     const { currency } = storeToRefs(useAppUserConfigStore());
     const { createRecord } = useWeb5VueUtils();
     const { setConversations } = useAppStore();
+
     const { chat } = useConvex();
 
     const hoveredIndex = ref<null | number>(null);
     const suggestedPrompts = ref([
-      { title: "whats my", others: "income for last month" },
-      { title: "whats my", others: "income for last month" },
-      { title: "whats my", others: "income for last month" },
-      { title: "whats my", others: "income for last month" },
+      { title: "What's my", others: "income for last month?" },
+      { title: "How much did I spend on", others: "groceries last week?" },
+      { title: "Show me my", others: "monthly expenses breakdown?" },
+      {
+        title: "Set a budget of",
+        others: "500 naira for dining out this month.",
+      },
     ]);
 
     const prompt = ref("");
@@ -133,7 +138,7 @@ export default defineComponent({
 
       const monthlyFigures = Object.entries(monthlyTransactions)
         .map(([monthYear, data]) => {
-          return `Month and Year: ${monthYear} |  Income: ${data.income} | Expenses: ${data.expenses} | Currency: ${currency.value}`;
+          return `Month and Year: ${monthYear} | Income: ${data.income} | Expenses: ${data.expenses} | Currency: ${currency.value}`;
         })
         .join("\n");
 
@@ -222,9 +227,6 @@ export default defineComponent({
         })
         .join("\n");
 
-      //  User's Transactions:
-      //     ${transactionText}
-
       const context = `
         Monthly Financial Figures:
         ${monthlyFigures}
@@ -241,6 +243,7 @@ export default defineComponent({
 
       return context;
     });
+
     const answerQuestion = async () => {
       try {
         if (aiResponseLoading.value) {
@@ -266,8 +269,7 @@ export default defineComponent({
 
         const response = await chat(userFinanceContext.value, prompt.value);
 
-        aiResponseLoading.value = false;
-        addToConversations(response || "", "ai");
+        addToConversations(response, "ai");
         prompt.value = "";
       } catch (error) {
         console.log({ error });

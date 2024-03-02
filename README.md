@@ -1,2 +1,2 @@
-# finsight-ai-convex
+# Finsight AI
 Your decentralised financial companion

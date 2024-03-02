@@ -11,11 +11,10 @@ import { ACCOUNT_TRANSACTIONS, ACCOUNTS, BUDGETS } from "~/services/schemas";
 export const useAppStore = defineStore("appStore", () => {
   const loadingScreenEnabled = ref<boolean>(false);
   const loadingScreenText = ref(
-    "Migrating financial data, it might take a while.... hang tight 👨🏽‍🔧"
+    "We're fetching your financial data from your bank. This whole process may take a minute or more, so you might want to grab a coffee and relax. Hang tight! 👨🏽‍🔧"
   );
 
   const appLocked = ref(true);
-  const inactivityPeriodLimit = ref();
 
   const recordIsInPullingState = ref<{ [schema: string]: boolean }>({
     [ACCOUNT_TRANSACTIONS]: false,
@@ -24,10 +23,12 @@ export const useAppStore = defineStore("appStore", () => {
   });
 
   const myDid = ref<string>("");
+  const vcJwt = ref<string>("");
   const user = ref<UserDTO>({});
   const accounts = ref<AccountDTO[]>([]);
   const assets = ref<AccountAssetDTO[]>([]);
   const transactions = ref<AccountStatementDTO[]>([]);
+  const transactionsInPageView = ref<AccountStatementDTO[]>([]);
   const budgets = ref<BudgetDTO[]>([]);
   const conversations = ref<ConversationDTO[]>([]);
 
@@ -48,8 +49,13 @@ export const useAppStore = defineStore("appStore", () => {
     myDid.value = _did;
   }
 
+  function setVcJwt(_vcJwt: string) {
+    vcJwt.value = _vcJwt;
+  }
+
   function setTransactions(_transactions: AccountStatementDTO[]) {
     transactions.value = _transactions;
+    transactionsInPageView.value = _transactions;
   }
 
   function setAssets(_assets: AccountAssetDTO[]) {
@@ -86,7 +92,7 @@ export const useAppStore = defineStore("appStore", () => {
     conversations,
     myDid,
     appLocked,
-    inactivityPeriodLimit,
+    vcJwt,
     setAppLocked,
     updateLoadingScreenStatus,
     setTransactions,
@@ -99,5 +105,7 @@ export const useAppStore = defineStore("appStore", () => {
     setMyDid,
     user,
     setUser,
+    setVcJwt,
+    transactionsInPageView,
   };
 });

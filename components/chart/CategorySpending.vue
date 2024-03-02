@@ -11,18 +11,18 @@ import {
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
-  DataZoomComponent,
   GridComponent,
 } from "echarts/components";
+import { UniversalTransition } from "echarts/features";
 
 echarts.use([
   LineChart,
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
-  DataZoomComponent,
   CanvasRenderer,
   GridComponent,
+  UniversalTransition,
 ]);
 export default defineComponent({
   props: {
@@ -48,7 +48,7 @@ export default defineComponent({
       }
 
       const axisLabel = {
-        fontFamily: "Farfetch Basis Regular",
+        fontFamily: "PowerGroteskTrial-Regular",
         fontSize: 10,
         fontWeight: "normal",
       };
@@ -93,7 +93,7 @@ export default defineComponent({
           smooth: false,
           tooltip: {
             valueFormatter: function (value: string) {
-              return `₦${value}`;
+              return `₦ ${formatMoney(Number(value))}`;
             },
           },
         })),
@@ -105,6 +105,7 @@ export default defineComponent({
           },
         },
       };
+      console.log({ options });
       if (chart.value) {
         chart.value.setOption(options);
       }

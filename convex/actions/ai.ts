@@ -1,6 +1,6 @@
 "use node";
 import { v } from "convex/values";
-import { action } from "./_generated/server";
+import { action } from "../_generated/server";
 import { OpenAI } from "openai";
 
 export const chat = action({
@@ -33,6 +33,8 @@ export const chat = action({
       stop: null,
     });
 
-    return response.choices[0]?.message?.content?.replace(/\.[^.]+$/, ".");
+    return (
+      response.choices[0]?.message?.content?.replace(/\.[^.]+$/, ".") || ""
+    );
   },
 });

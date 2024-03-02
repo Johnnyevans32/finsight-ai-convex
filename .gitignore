@@ -129,5 +129,12 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+DATA/
+
+.vscode/
+
+.output/
+
+.nuxt/
 
 .DS_Store

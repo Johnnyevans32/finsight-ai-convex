@@ -48,3 +48,6 @@ export const groupBy = <T extends Record<string | number, any>>(
     return acc;
   }, {} as Record<string | number, T>);
 };
+
+export const truncateString = (data: string) =>
+  `${data.substring(0, 7)}...${data.slice(data.length - 4)}`;

@@ -7,7 +7,7 @@ export default defineNuxtPlugin(async () => {
   let did: string;
 
   try {
-    console.log("connecting to web5", dwnEndpoint.value);
+    console.log("connecting to web5");
     ({ web5, did } = await Web5.connect({
       techPreview: { dwnEndpoints: [dwnEndpoint.value] },
       sync: "60s",
