@@ -1,7 +1,7 @@
 import { v } from "convex/values";
-import { internalMutation } from "../_generated/server";
+import { mutation } from "../_generated/server";
 
-export const createUser = internalMutation({
+export const createUser = mutation({
   args: { did: v.string() },
   handler: async (ctx, args) => {
     const userAlreadyExist = await ctx.db

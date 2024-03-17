@@ -36,12 +36,3 @@ export const sendResetPasswordCodeEmail = action({
     await transporter.sendMail(mailOptions);
   },
 });
-
-export const ping = action({
-  args: { did: v.string() },
-  handler: async (ctx, args) => {
-    await ctx.runMutation(internal.mutations.user.createUser, {
-      did: args.did,
-    });
-  },
-});

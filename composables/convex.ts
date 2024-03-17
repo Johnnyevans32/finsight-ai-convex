@@ -59,7 +59,7 @@ export function useConvex() {
   };
 
   const ping = async () => {
-    return await $convexClient.action(api.actions.user.ping, {
+    return await $convexClient.mutation(api.mutations.user.createUser, {
       did: myDid.value,
     });
   };
