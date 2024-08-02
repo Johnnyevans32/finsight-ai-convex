@@ -16,7 +16,7 @@ export const useAppUserConfigStore = defineStore(
   "appUserConfigStore",
   () => {
     const appThemeColor = ref<string>("light");
-    const dwnEndpoint = ref("https://dwn.tbddev.org/dwn1");
+    const dwnEndpoint = ref("https://dwn.gcda.xyz");
     const currency = ref(Currency.NGN);
     const durationOfScreenLockUntilLockInMins = ref(5);
 

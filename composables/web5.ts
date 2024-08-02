@@ -1,7 +1,5 @@
 import { notify } from "@kyvg/vue3-notification";
 import { DateSort } from "@tbd54566975/dwn-sdk-js";
-import { Record } from "@web5/api/dist/types/record";
-import { Protocol } from "@web5/api/dist/types/protocol";
 
 import { useAppStore } from "~/store";
 import {
@@ -147,7 +145,7 @@ export function useWeb5VueUtils() {
   };
 
   const syncToUserDwn = async (
-    record: Record | Protocol,
+    record: any,
     targetDid: string = myDid.value
   ) => {
     const { status: sendStatus } = await record.send(targetDid);

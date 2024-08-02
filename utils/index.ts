@@ -171,11 +171,11 @@ export const protocolDefinition: ProtocolDefinition = {
         {
           who: "author",
           of: ACCOUNTS,
-          can: "read",
+          can: ["read"],
         },
         {
           who: "anyone",
-          can: "write",
+          can: ["create"],
         },
       ],
       ...Object.fromEntries(
@@ -186,12 +186,7 @@ export const protocolDefinition: ProtocolDefinition = {
               {
                 who: "author",
                 of: ACCOUNTS,
-                can: "write",
-              },
-              {
-                who: "author",
-                of: ACCOUNTS,
-                can: "read",
+                can: ["create", "read"],
               },
             ],
           },
@@ -205,12 +200,12 @@ export const protocolDefinition: ProtocolDefinition = {
           $actions: [
             {
               who: "anyone",
-              can: "write",
+              can: ["create"],
             },
             {
               who: "author",
               of: schema,
-              can: "read",
+              can: ["read"],
             },
           ],
         },

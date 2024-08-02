@@ -25,21 +25,26 @@ export default defineNuxtConfig({
   },
 
   telemetry: false,
+
   css: [
     "~/assets/css/styles.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
+
   ssr: false,
   modules: ["@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+
   pinia: {
     storesDirs: ["./stores/**", "./custom-folder/stores/**"],
   },
+
   build: {
     transpile: ["@headlessui/vue", "@fortawesome/vue-fontawesome"],
   },
@@ -53,7 +58,10 @@ export default defineNuxtConfig({
       convexUrl: process.env.CONVEX_URL,
     },
   },
+
   vite: {
     plugins: [nodePolyfills()],
   },
+
+  compatibilityDate: "2024-08-02",
 });

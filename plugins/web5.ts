@@ -6,11 +6,29 @@ export default defineNuxtPlugin(async () => {
   let web5: Web5;
   let did: string;
 
+  console.log("connecting to web5");
   try {
-    console.log("connecting to web5");
     ({ web5, did } = await Web5.connect({
-      techPreview: { dwnEndpoints: [dwnEndpoint.value] },
+      ...(dwnEndpoint.value
+        ? { didCreateOptions: { dwnEndpoints: [dwnEndpoint.value] } }
+        : {}),
       sync: "60s",
+      registration: {
+        onSuccess: () => {
+          console.log("data");
+          /*
+      Registration succeeded, set a local storage value to indicate the user 
+      is registered and registration does not need to occur again
+      */
+        },
+        onFailure: (error) => {
+          console.log({ error });
+          /* 
+      Registration failed, display an error message to the user, and pass in 
+      the registration object again to retry next time the user connects
+      */
+        },
+      },
     }));
     console.log("connected to web5");
   } catch (err) {
